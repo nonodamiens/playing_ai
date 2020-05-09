@@ -1,5 +1,7 @@
 """Jeu des allumettes"""
 
+from classes import *
+
 import re
 
 # choix du nombre d'allumettes
@@ -10,6 +12,11 @@ while not re.match(r'\d{2}', nb_allumettes):
     nb_allumettes = input('nouveau choix du nombre d\'allumettes :')
 nb_allumettes = int(nb_allumettes)
 print('vous avez choisi:', nb_allumettes, 'allumettes')
+
+# Instanciation du jeu
+jeu = Game(nb_allumettes)
+
+print('jeu :', jeu.nb_allumette)
 
 # boucle de jeu
 while nb_allumettes > 0:
