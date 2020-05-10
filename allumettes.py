@@ -16,37 +16,40 @@ print('vous avez choisi:', nb_allumettes, 'allumettes')
 # Instanciation du jeu
 jeu = Game(nb_allumettes)
 
-print('jeu :', jeu.nb_allumette)
+j1 = Gamer()
+j2 = Gamer()
 
 # boucle de jeu
 while jeu.nb_allumette > 0:
     print('Etat du jeu :')
     jeu.etat()
     # joueur 1
-    j1 = input('j1 : Choisir 1, 2 ou 3 allumettes :')
+    print('Joueur 1')
+    j1_choix = j1.action()
     if jeu.nb_allumette < 3:
         choix = [str(x) for x in range(1, jeu.nb_allumette + 1)]
     else:
         choix = ['1', '2', '3']
-    while j1 not in choix:
-        j1 = input('j1 : Choisir 1, 2 ou 3 allumettes :')
+    while j1_choix not in choix:
+        j1_choix = j1.action()
     # on retire les allumettes
-    jeu.action(int(j1))
+    jeu.action(int(j1_choix))
     # check si perdu
     if jeu.fin():
         print('J1 a perdu')
         break
     # de même pour joueur2
     jeu.etat()
-    j2 = input('j2 : Choisir 1, 2 ou 3 allumettes :')
+    print('Joueur 2')
+    j2_choix = j2.action()
     if jeu.nb_allumette < 3:
         choix = [str(x) for x in range(1, jeu.nb_allumette + 1)]
     else:
         choix = ['1', '2', '3']
-    while j2 not in choix:
-        j2 = input('j2 : Choisir 1, 2 ou 3 allumettes :')
+    while j2_choix not in choix:
+        j2_choix = j2.action()
     # on retire les allumettes
-    jeu.action(int(j2))
+    jeu.action(int(j2_choix))
     # check si perdu
     if jeu.fin():
         print('J2 a perdu')

@@ -30,7 +30,15 @@ class Gamer:
 
     def __init__(self):
         """Instanciation d'un joueur"""
-        self.gagnant = False
-        self.perdant = False
         self.nb_gain = 0
         self.nb_perte = 0
+
+    def reset(self):
+        """Remise à zéro des stats du joueur"""
+        self.nb_gain = 0
+        self.nb_perte = 0
+    
+    def action(self):
+        choix = input('Choix d\'1, 2 ou 3 allumettes :')
+        return choix
+    
