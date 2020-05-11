@@ -1,4 +1,5 @@
 """Les classes de jeu des allumettes"""
+import random
 
 class Game:
     """Classe de définition du jeu (nombre d'allumettes...)"""
@@ -28,8 +29,9 @@ class Game:
 class Gamer:
     """Classe de définition d'un joueur"""
 
-    def __init__(self):
+    def __init__(self, human):
         """Instanciation d'un joueur"""
+        self.human = human
         self.nb_gain = 0
         self.nb_perte = 0
 
@@ -39,6 +41,11 @@ class Gamer:
         self.nb_perte = 0
     
     def action(self):
-        choix = input('Choix d\'1, 2 ou 3 allumettes :')
-        return choix
+        """Choix du nombre d'allumette à prendre - choix du joueur humain ou non"""
+        if self.human:
+            choix = input('Choix d\'1, 2 ou 3 allumettes :')
+            return choix
+        else:
+            choix = str(random.randint(1,3))
+            return choix
     

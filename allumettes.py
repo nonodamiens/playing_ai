@@ -16,8 +16,14 @@ print('vous avez choisi:', nb_allumettes, 'allumettes')
 # Instanciation du jeu
 jeu = Game(nb_allumettes)
 
-j1 = Gamer()
-j2 = Gamer()
+human = input('joueur 1 ia (0) ou humain (1)')
+while human not in ['0', '1']:
+    human = input('joueur 1 ia (0) ou humain (1)')
+j1 = Gamer(int(human))
+human = input('joueur 2 ia (0) ou humain (1)')
+while human not in ['0', '1']:
+    human = input('joueur 2 ia (0) ou humain (1)')
+j2 = Gamer(int(human))
 
 # boucle de jeu
 while jeu.nb_allumette > 0:
