@@ -48,4 +48,9 @@ class Gamer:
         else:
             choix = str(random.randint(1,3))
             return choix
+
+    # def train(self):
+    #     """Calcul de la value fonction et mémorisation"""
+    #     if not self.human:
+    #         if 
     
