@@ -38,8 +38,9 @@ class Gamer:
 
     def reset(self):
         """Remise à zéro des stats du joueur"""
-        self.nb_gain = 0
-        self.nb_perte = 0
+        # self.nb_gain = 0
+        # self.nb_perte = 0
+        self.partie_mem = []
     
     def action(self):
         """Choix du nombre d'allumette à prendre - choix du joueur humain ou non"""
