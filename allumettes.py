@@ -37,6 +37,8 @@ while jeu.nb_allumette > 0:
         choix = ['1', '2', '3']
     while j1_choix not in choix:
         j1_choix = j1.action()
+    # memorisation du choix
+    j1.partie(j1_choix)
     # on retire les allumettes
     jeu.action(int(j1_choix))
     # check si perdu
@@ -55,6 +57,8 @@ while jeu.nb_allumette > 0:
         choix = ['1', '2', '3']
     while j2_choix not in choix:
         j2_choix = j2.action()
+    # memorisation du choix
+    j2.partie(j2_choix)
     # on retire les allumettes
     jeu.action(int(j2_choix))
     # check si perdu
@@ -62,5 +66,7 @@ while jeu.nb_allumette > 0:
         j2.nb_perte += 1
         j1.nb_gain += 1
         print('j2 a perdu')
-    print('J1 a perdu', j1.nb_perte, 'fois et gagné', j1.nb_gain, 'fois.')
-    print('J2 a perdu', j2.nb_perte, 'fois et gagné', j2.nb_gain, 'fois.')
+print('coups de j1 :', j1.partie_mem)
+print('coups de j2 :', j2.partie_mem)
+print('J1 a perdu', j1.nb_perte, 'fois et gagné', j1.nb_gain, 'fois.')
+print('J2 a perdu', j2.nb_perte, 'fois et gagné', j2.nb_gain, 'fois.')

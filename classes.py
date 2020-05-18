@@ -32,6 +32,7 @@ class Gamer:
     def __init__(self, human):
         """Instanciation d'un joueur"""
         self.human = human
+        self.partie_mem = []
         self.nb_gain = 0
         self.nb_perte = 0
 
@@ -48,6 +49,10 @@ class Gamer:
         else:
             choix = str(random.randint(1,3))
             return choix
+
+    def partie(self, coup):
+        """Memorisation des coups joués"""
+        self.partie_mem.append(coup)
 
     # def train(self):
     #     """Calcul de la value fonction et mémorisation"""
