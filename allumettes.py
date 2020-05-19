@@ -28,6 +28,9 @@ j2 = Gamer(int(human))
 go_on = True
 while go_on:
 # boucle de partie
+# initialisation des etats des joueurs
+    j1_etats = []
+    j2_etats = []
     while jeu.nb_allumette > 0:
         print('Etat du jeu :')
         jeu.etat()
@@ -40,14 +43,17 @@ while go_on:
             choix = ['1', '2', '3']
         while j1_choix not in choix:
             j1_choix = j1.action()
-        # memorisation du choix
+        # memorisation du choix et de l'etat
         j1.partie(j1_choix)
+        j1_etats.append(jeu.nb_allumette)
         # on retire les allumettes
         jeu.action(int(j1_choix))
         # check si perdu
         if jeu.fin():
             j1.nb_perte += 1
             j2.nb_gain += 1
+            j1.resultat = -1
+            j2.resultat = 1
             print('J1 a perdu')
             break
         # de même pour joueur2
@@ -60,17 +66,24 @@ while go_on:
             choix = ['1', '2', '3']
         while j2_choix not in choix:
             j2_choix = j2.action()
-        # memorisation du choix
+        # memorisation du choix et de l'etat
         j2.partie(j2_choix)
+        j2_etats.append(jeu.nb_allumette)
         # on retire les allumettes
         jeu.action(int(j2_choix))
         # check si perdu
         if jeu.fin():
             j2.nb_perte += 1
             j1.nb_gain += 1
+            j1.resultat = 1
+            j2.resultat = -1
             print('j2 a perdu')
+    j1.value_fonction(j1_etats, j1.resultat)
+    j2.value_fonction(j2_etats, j2.resultat)
     print('coups de j1 :', j1.partie_mem)
     print('coups de j2 :', j2.partie_mem)
+    print('liste des etats j1', j1.etats)
+    print('liste des etats j2', j2.etats)
     # une nouvelle partie
     restart = input('Un nouvelle partie ? (y/n)')
     while restart not in ['y', 'n']:

@@ -33,8 +33,12 @@ class Gamer:
         """Instanciation d'un joueur"""
         self.human = human
         self.partie_mem = []
+        self.choix_valeur = []
+        self.etats = {}
+        self.resultat = 0
         self.nb_gain = 0
         self.nb_perte = 0
+        self.lr = 0.1
 
     def reset(self):
         """Remise à zéro des stats du joueur"""
@@ -55,8 +59,21 @@ class Gamer:
         """Memorisation des coups joués"""
         self.partie_mem.append(coup)
 
-    # def train(self):
-    #     """Calcul de la value fonction et mémorisation"""
-    #     if not self.human:
-    #         if 
-    
+    # def etat(self, nb_allumette):
+    #     """Enregistrement des différents états de la partie"""
+    #     if nb_allumette in self.etats:
+    #         print('toto')
+    #     else:
+    #         self.etats[nb_allumette] = 0
+
+    def value_fonction(self, etats, resultat):
+        """Calcul de la value fonction - gagné = 1 / perdu = 0"""
+        if etats[-1] not in self.etats:
+            self.etats[etats[-1]] = self.lr * resultat
+        else:
+            self.etats[etats[-1]] = self.etats[etats[-1]] + self.lr * (resultat - self.etats[etats[-1]])
+        for i in range(len(etats) - 1):
+            if etats[-2 - i] not in self.etats:
+                self.etats[etats[-2 -i]] = self.lr * self.etats[etats[-1 -i]]
+            else:
+                self.etats[etats[-2 -i]] = self.etats[etats[-2 -i]] + self.lr * (self.etats[etats[-1 -i]] - self.etats[etats[-2 -i]])
