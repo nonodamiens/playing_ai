@@ -82,8 +82,8 @@ while go_on:
     j2.value_fonction(j2_etats, j2.resultat)
     print('coups de j1 :', j1.partie_mem)
     print('coups de j2 :', j2.partie_mem)
-    print('liste des etats j1', j1.etats)
-    print('liste des etats j2', j2.etats)
+    print('liste des etats j1', sorted(j1.etats.items(), reverse=True))
+    print('liste des etats j2', sorted(j2.etats.items(), reverse=True))
     # une nouvelle partie
     restart = input('Un nouvelle partie ? (y/n)')
     while restart not in ['y', 'n']:
