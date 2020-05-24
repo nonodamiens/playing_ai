@@ -33,7 +33,6 @@ class Gamer:
         """Instanciation d'un joueur"""
         self.human = human
         self.partie_mem = []
-        self.choix_valeur = []
         self.etats = {}
         self.resultat = 0
         self.nb_gain = 0
@@ -42,32 +41,24 @@ class Gamer:
 
     def reset(self):
         """Remise à zéro des stats du joueur"""
-        # self.nb_gain = 0
-        # self.nb_perte = 0
         self.partie_mem = []
     
-    def action(self):
+    def action(self, max=3):
         """Choix du nombre d'allumette à prendre - choix du joueur humain ou non"""
         if self.human:
-            choix = input('Choix d\'1, 2 ou 3 allumettes :')
+            print("Choix du nombre d'allumettes (max : ", max, "):")
+            choix = input('>')
             return choix
         else:
-            choix = str(random.randint(1,3))
+            choix = str(random.randint(1,max))
             return choix
 
     def partie(self, coup):
         """Memorisation des coups joués"""
         self.partie_mem.append(coup)
 
-    # def etat(self, nb_allumette):
-    #     """Enregistrement des différents états de la partie"""
-    #     if nb_allumette in self.etats:
-    #         print('toto')
-    #     else:
-    #         self.etats[nb_allumette] = 0
-
     def value_fonction(self, etats, resultat):
-        """Calcul de la value fonction - gagné = 1 / perdu = 0"""
+        """Calcul de la value fonction"""
         if etats[-1] not in self.etats:
             self.etats[etats[-1]] = self.lr * resultat
         else:
