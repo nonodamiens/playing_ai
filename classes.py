@@ -71,3 +71,7 @@ class Gamer:
                 self.etats[etats[-2 -i]] = self.lr * self.etats[etats[-1 -i]]
             else:
                 self.etats[etats[-2 -i]] = self.etats[etats[-2 -i]] + self.lr * (self.etats[etats[-1 -i]] - self.etats[etats[-2 -i]])
+
+    def winrate(self):
+        ''' Calcul du winrate du joueur '''
+        return self.nb_gain / (self.nb_gain + self.nb_perte)

@@ -43,7 +43,7 @@ valeur_etats = {1:-1}
 for etat in range(2, nb_allumettes + 1):
     valeur_etats[etat] = 0
 # Définition d'un learning rate
-lr = 0.1
+lr = 0.01
 greedy = 0.99
 
 # Boucle d'entrainement
@@ -95,8 +95,10 @@ while training > 0:
 
 print('liste des valeur par états :')
 for v in valeur_etats:
-    print(v, ':', valeur_etats[v])     
-
+    print(v, ':', valeur_etats[v])
+print('ratio des parties')
+print('joueur 1 winrate :', ia1.winrate())     
+print('joueur 2 winrate :', ia2.winrate())
 
 
 # boucle de jeu avec humain (to complete)
