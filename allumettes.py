@@ -100,9 +100,64 @@ print('ratio des parties')
 print('joueur 1 winrate :', ia1.winrate())     
 print('joueur 2 winrate :', ia2.winrate())
 
+# boucle de jeu trained IA vs lambda IA
+ial = Gamer(0)
+
+print('combat ia entrainée vs ia lambda')
+nb_parties = input('Combien de parties ? :')
+while nb_parties.isdigit() == False:
+    nb_parties = input('Combien de parties ? :')
+while int(nb_parties) < 0 or int(nb_parties) > 100000:
+    nb_parties = input('Combien de parties ? :')
+nb_parties = int(nb_parties)
+
+# reset stats and game
+ia1.nb_gain = 0
+ia1.nb_perte = 0
+jeu.reset()
+
+greedy = 0.05
+while nb_parties > 0:
+    while jeu.nb_allumette > 0:
+        if jeu.fin():
+            ia1.nb_perte += 1
+            ial.nb_gain += 1
+            ia1.resultat = -1
+            ial.resultat = 1
+            break
+        if jeu.nb_allumette > 3:
+            ia1_choix = ia1.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette - 1)])
+        else:
+            ia1_choix = ia1.action(jeu.nb_allumette, greedy, [valeur_etats[i] for i in range(1, jeu.nb_allumette)])
+        ia1.partie(ia1_choix)
+        ia1_etats.append(jeu.nb_allumette)
+        jeu.action(int(ia1_choix))
+        
+        if jeu.fin():
+            ial.nb_perte += 1
+            ia1.nb_gain += 1
+            ial.resultat = -1
+            ia1.resultat = 1
+            break
+        if jeu.nb_allumette > 3:
+            ial_choix = ial.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette - 1)])
+        else:
+            ial_choix = ial.action(jeu.nb_allumette, greedy, [valeur_etats[i] for i in range(1, jeu.nb_allumette)])
+        # ial.partie(ial_choix)
+        # ial_etats.append(jeu.nb_allumette)
+        jeu.action(int(ial_choix))
+    
+    nb_parties -= 1
+
+print('ratio des parties')
+print('joueur ia1 winrate :', ia1.winrate())     
+print('joueur ial winrate :', ial.winrate())
+print(ial.nb_gain, ial.nb_perte)
+
 
 # boucle de jeu avec humain (to complete)
 go_on = False
+
 while go_on:
 # boucle de partie
 # initialisation des etats des joueurs
