@@ -39,41 +39,44 @@ humain = Gamer(1)
 # j2 = Gamer(int(human))
 
 # Initialisation de la valeur des différents états du jeu
-valeur_etats = {}
-for etat in range(1, nb_allumettes + 1):
+valeur_etats = {1:-1}
+for etat in range(2, nb_allumettes + 1):
     valeur_etats[etat] = 0
 # Définition d'un learning rate
-    lr = 0.1
+lr = 0.1
+greedy = 0.99
 
 # Boucle d'entrainement
 while training > 0:
     ia1_etats, ia2_etats = [], []
     while jeu.nb_allumette > 0:
-        if jeu.nb_allumette >= 3:
-            ia1_choix = ia1.action()
-        else:
-            ia1_choix = ia1.action(jeu.nb_allumette)
-        ia1.partie(ia1_choix)
-        ia1_etats.append(jeu.nb_allumette)
-        jeu.action(int(ia1_choix))
         if jeu.fin():
             ia1.nb_perte += 1
             ia2.nb_gain += 1
             ia1.resultat = -1
             ia2.resultat = 1
             break
-        if jeu.nb_allumette >= 3:
-            ia2_choix = ia2.action()
+        if jeu.nb_allumette > 3:
+            ia1_choix = ia1.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette - 1)])
         else:
-            ia2_choix = ia2.action(jeu.nb_allumette)
-        ia2.partie(ia2_choix)
-        ia2_etats.append(jeu.nb_allumette)
-        jeu.action(int(ia2_choix))
+            ia1_choix = ia1.action(jeu.nb_allumette, greedy, [valeur_etats[i] for i in range(1, jeu.nb_allumette)])
+        ia1.partie(ia1_choix)
+        ia1_etats.append(jeu.nb_allumette)
+        jeu.action(int(ia1_choix))
+        
         if jeu.fin():
             ia2.nb_perte += 1
             ia1.nb_gain += 1
             ia2.resultat = -1
             ia1.resultat = 1
+            break
+        if jeu.nb_allumette > 3:
+            ia2_choix = ia2.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette - 1)])
+        else:
+            ia2_choix = ia2.action(jeu.nb_allumette, greedy, [valeur_etats[i] for i in range(1, jeu.nb_allumette)])
+        ia2.partie(ia2_choix)
+        ia2_etats.append(jeu.nb_allumette)
+        jeu.action(int(ia2_choix))
 
     # actualisation des valeur d'états avec les value fonction12
     valeur_etats[ia1_etats[-1]] = valeur_etats[ia1_etats[-1]] + lr * (ia1.resultat - valeur_etats[ia1_etats[-1]])
@@ -84,6 +87,8 @@ while training > 0:
         valeur_etats[ia2_etats[-2 -i]] = valeur_etats[ia2_etats[-2 -i]] + lr * (valeur_etats[ia2_etats[-1 -i]] - valeur_etats[ia2_etats[-2 -i]])
 
     training -= 1
+    if training % 10 == 0:
+        greedy = max(greedy * 0.996, 0.05)
     jeu.reset()
     ia1.reset()
     ia2.reset()

@@ -10,7 +10,7 @@ class Game:
         self.nb_allumette = nb
 
     def fin(self):
-        if self.nb_allumette <= 0:
+        if self.nb_allumette <= 1:
             return True
         else:
             return False
@@ -43,14 +43,17 @@ class Gamer:
         """Remise à zéro des stats du joueur"""
         self.partie_mem = []
     
-    def action(self, max=3):
+    def action(self, max = 3, greedy = 0.99, state = [0, 0, 0]):
         """Choix du nombre d'allumette à prendre - choix du joueur humain ou non"""
         if self.human:
             print("Choix du nombre d'allumettes (max : ", max, "):")
             choix = input('>')
             return choix
         else:
-            choix = str(random.randint(1,max))
+            if random.uniform(0,1) < greedy:
+                choix = str(random.randint(1,max))
+            else:
+                choix = state.index(min(state)) + 1
             return choix
 
     def partie(self, coup):
