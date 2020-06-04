@@ -56,10 +56,16 @@ while training > 0:
             ia1.resultat = -1
             ia2.resultat = 1
             break
+        # print('joueur 1')
+        # print('nb allumettes :', jeu.nb_allumette)
+        # print('valeurs des états :', valeur_etats)
         if jeu.nb_allumette > 3:
-            ia1_choix = ia1.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette - 1)])
+            ia1_choix = ia1.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette)])
+            # print('Liste des choix :', [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette)])
         else:
             ia1_choix = ia1.action(jeu.nb_allumette, greedy, [valeur_etats[i] for i in range(1, jeu.nb_allumette)])
+            # print('Liste des choix 2:', [valeur_etats[i] for i in range(1, jeu.nb_allumette)])
+        # print('---------------------------------')
         ia1.partie(ia1_choix)
         ia1_etats.append(jeu.nb_allumette)
         jeu.action(int(ia1_choix))
@@ -70,8 +76,13 @@ while training > 0:
             ia2.resultat = -1
             ia1.resultat = 1
             break
+        # print('')
+        # print('joueur 2')
+        # print('nb allumettes :', jeu.nb_allumette)
+        # print('valeurs des états :', valeur_etats)
+        # print('---------------------------------')
         if jeu.nb_allumette > 3:
-            ia2_choix = ia2.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette - 1)])
+            ia2_choix = ia2.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette)])
         else:
             ia2_choix = ia2.action(jeu.nb_allumette, greedy, [valeur_etats[i] for i in range(1, jeu.nb_allumette)])
         ia2.partie(ia2_choix)
@@ -88,7 +99,7 @@ while training > 0:
 
     training -= 1
     if training % 10 == 0:
-        greedy = max(greedy * 0.996, 0.05)
+        greedy = max(greedy * 0.99, 0.05)
     jeu.reset()
     ia1.reset()
     ia2.reset()
@@ -126,7 +137,7 @@ while nb_parties > 0:
             ial.resultat = 1
             break
         if jeu.nb_allumette > 3:
-            ia1_choix = ia1.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette - 1)])
+            ia1_choix = ia1.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette)])
         else:
             ia1_choix = ia1.action(jeu.nb_allumette, greedy, [valeur_etats[i] for i in range(1, jeu.nb_allumette)])
         ia1.partie(ia1_choix)
@@ -140,7 +151,7 @@ while nb_parties > 0:
             ia1.resultat = 1
             break
         if jeu.nb_allumette > 3:
-            ial_choix = ial.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette - 1)])
+            ial_choix = ial.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette)])
         else:
             ial_choix = ial.action(jeu.nb_allumette, greedy, [valeur_etats[i] for i in range(1, jeu.nb_allumette)])
         # ial.partie(ial_choix)

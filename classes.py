@@ -46,14 +46,17 @@ class Gamer:
     def action(self, max = 3, greedy = 0.99, state = [0, 0, 0]):
         """Choix du nombre d'allumette à prendre - choix du joueur humain ou non"""
         if self.human:
-            print("Choix du nombre d'allumettes (max : ", max, "):")
+            # print("Choix du nombre d'allumettes (max : ", max, "):")
             choix = input('>')
             return choix
         else:
             if random.uniform(0,1) < greedy:
                 choix = str(random.randint(1,max))
+                # print('choix random :', choix)
             else:
-                choix = state.index(min(state)) + 1
+                # print('liste des choix :', state[::-1])
+                choix = state[::-1].index(min(state[::-1])) + 1
+                # print('choix :', choix)
             return choix
 
     def partie(self, coup):
