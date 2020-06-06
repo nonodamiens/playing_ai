@@ -16,6 +16,8 @@ La *value function* est la fonction de base utilisée en *reinforcement learning
 
 $$ V(t0) = V(t0) + lr x ( V(t1) - V(t0) ) $$
 
+V(t<sub>0</sub> = V(t<sub>0</sub> + lr * (V(t<sub>1</sub> - V(t<sub>0</sub>)
+
 Elle sert à modifier la valeur de l'état actuel en fonction de la valeur des états suivants
 
 ### exemple ###
@@ -55,6 +57,9 @@ t1 -> t0
 * Résumé/résultat/choix de l'agent :
 
 agent   -> révision (0.187) -> dodo (1.25)              => +5
+
                             -> grosse_révision (-0.25)  => -1
+
         -> binouze (-0.312) -> super_binouze (-1.25)    => -5
+
                             -> révision_dodo (0)        =>  0
