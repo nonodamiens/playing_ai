@@ -1,14 +1,26 @@
-# playing_ai
-Entrainement d'IA à jouer
+# playing_ai #
+Projet d'entrainement d'IA à jouer
 
-Cours de Thibault Neveu
+Ce projet se base sur les Cours de Thibault Neveu
+https://www.youtube.com/channel/UCVso5UVvQeGAuwbksmA95iA
 
-En premier on va tester la value fonction
-V(t0) = V(t0) + lr x ( V(t1) - V(t0) )
-Modifie la valeur de l'état actuel en fonction de la valeur des états suivants
+## contenu ##
+Ce projet contient un notebook allumettes.py qui explique pas à pas comment coder et entrainer des IA au jeu des allumettes. Une façon simple d'entrer dans le monde du reinforcement learning.
 
-exemple
-Etats possibles :
+Il contient également le jeu des allumettes et l'entrainement d'IA packagé pour s'amuser.
+
+## value function ##
+La *value function* est la fonction de base utilisée en *reinforcement learning*. Pour mieux l'appréhender, voici un petit exemple tirer du cours de Thibaut Neveu
+
+### Formalisation de la value function ###
+
+$$ V(t0) = V(t0) + lr x ( V(t1) - V(t0) ) $$
+
+Elle sert à modifier la valeur de l'état actuel en fonction de la valeur des états suivants
+
+### exemple ###
+
+* Etats possibles :
 
 |t0|t1|t2|
 |---|---|---|
@@ -17,7 +29,8 @@ Etats possibles :
 |binouze|révision_dodo|0|
 |révision|grosse_révision|-1|
 
-Initialisation des états à 0
+* Initialisation des états à 0
+
 Calcul de la valeur des différents états avec la value function :
 (on part de la fin, retropropagation)
 
@@ -39,7 +52,7 @@ t1 -> t0
 |0|**-0.625** + 0.5 * (0 - **-0.625**) = **-0.312** -> binouze|
 |-0.25|**0.625** + 0.5 * (-0.25 - **0.625**) = **0.187** -> révision|
 
-Résumé/résultat/choix de l'agent :
+* Résumé/résultat/choix de l'agent :
 
 agent   -> révision (0.187) -> dodo (1.25)              => +5
                             -> grosse_révision (-0.25)  => -1
