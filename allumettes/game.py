@@ -1,6 +1,7 @@
 """Jeu des allumettes"""
 
-from allumettes.classes import classes
+from allumettes.classes.game import Game
+from allumettes.classes.gamer import Gamer
 import re
 
 # choix du nombre d'allumettes
@@ -151,87 +152,88 @@ print('joueur ia1 winrate :', ia1.winrate())
 print('joueur ial winrate :', ial.winrate())
 
 # boucle de jeu avec humain (to complete)
-go_on = False
+# go_on = False
 
-while go_on:
-# boucle de partie
-# initialisation des etats des joueurs
-    j1_etats = []
-    j2_etats = []
-    while jeu.nb_allumette > 0:
-        print('Etat du jeu :')
-        jeu.etat()
-        # joueur 1
-        print('Joueur 1')
-        j1_choix = j1.action()
-        if jeu.nb_allumette < 3:
-            choix = [str(x) for x in range(1, jeu.nb_allumette + 1)]
-        else:
-            choix = ['1', '2', '3']
-        while j1_choix not in choix:
-            j1_choix = j1.action()
-        # memorisation du choix et de l'etat
-        j1.partie(j1_choix)
-        j1_etats.append(jeu.nb_allumette)
-        # on retire les allumettes
-        jeu.action(int(j1_choix))
-        # check si perdu
-        if jeu.fin():
-            j1.nb_perte += 1
-            j2.nb_gain += 1
-            j1.resultat = -1
-            j2.resultat = 1
-            print('J1 a perdu')
-            break
-        # de même pour joueur2
-        jeu.etat()
-        print('Joueur 2')
-        j2_choix = j2.action()
-        if jeu.nb_allumette < 3:
-            choix = [str(x) for x in range(1, jeu.nb_allumette + 1)]
-        else:
-            choix = ['1', '2', '3']
-        while j2_choix not in choix:
-            j2_choix = j2.action()
-        # memorisation du choix et de l'etat
-        j2.partie(j2_choix)
-        j2_etats.append(jeu.nb_allumette)
-        # on retire les allumettes
-        jeu.action(int(j2_choix))
-        # check si perdu
-        if jeu.fin():
-            j2.nb_perte += 1
-            j1.nb_gain += 1
-            j1.resultat = 1
-            j2.resultat = -1
-            print('j2 a perdu')
+# while go_on:
+# # boucle de partie
+# # initialisation des etats des joueurs
+#     j1_etats = []
+#     j2_etats = []
+#     while jeu.nb_allumette > 0:
+#         print('Etat du jeu :')
+#         jeu.etat()
+#         # joueur 1
+#         print('Joueur 1')
+#         j1_choix = j1.action()
+#         if jeu.nb_allumette < 3:
+#             choix = [str(x) for x in range(1, jeu.nb_allumette + 1)]
+#         else:
+#             choix = ['1', '2', '3']
+#         while j1_choix not in choix:
+#             j1_choix = j1.action()
+#         # memorisation du choix et de l'etat
+#         j1.partie(j1_choix)
+#         j1_etats.append(jeu.nb_allumette)
+#         # on retire les allumettes
+#         jeu.action(int(j1_choix))
+#         # check si perdu
+#         if jeu.fin():
+#             j1.nb_perte += 1
+#             j2.nb_gain += 1
+#             j1.resultat = -1
+#             j2.resultat = 1
+#             print('J1 a perdu')
+#             break
+#         # de même pour joueur2
+#         jeu.etat()
+#         print('Joueur 2')
+#         j2_choix = j2.action()
+#         if jeu.nb_allumette < 3:
+#             choix = [str(x) for x in range(1, jeu.nb_allumette + 1)]
+#         else:
+#             choix = ['1', '2', '3']
+#         while j2_choix not in choix:
+#             j2_choix = j2.action()
+#         # memorisation du choix et de l'etat
+#         j2.partie(j2_choix)
+#         j2_etats.append(jeu.nb_allumette)
+#         # on retire les allumettes
+#         jeu.action(int(j2_choix))
+#         # check si perdu
+#         if jeu.fin():
+#             j2.nb_perte += 1
+#             j1.nb_gain += 1
+#             j1.resultat = 1
+#             j2.resultat = -1
+#             print('j2 a perdu')
     
-    # actualisation des valeur d'états avec les value fonction
-    valeur_etats[j1_etats[-1]] = valeur_etats[j1_etats[-1]] + lr * (j1.resultat - valeur_etats[j1_etats[-1]])
-    valeur_etats[j2_etats[-1]] = valeur_etats[j2_etats[-1]] + lr * (j2.resultat - valeur_etats[j2_etats[-1]])
-    for i in range(len(j1_etats) - 1):
-        valeur_etats[j1_etats[-2 -i]] = valeur_etats[j1_etats[-2 -i]] + lr * (valeur_etats[j1_etats[-1 -i]] - valeur_etats[j1_etats[-2 -i]])
-    for i in range(len(j2_etats) - 1):
-        valeur_etats[j2_etats[-2 -i]] = valeur_etats[j2_etats[-2 -i]] + lr * (valeur_etats[j2_etats[-1 -i]] - valeur_etats[j2_etats[-2 -i]])
+#     # actualisation des valeur d'états avec les value fonction
+#     valeur_etats[j1_etats[-1]] = valeur_etats[j1_etats[-1]] + lr * (j1.resultat - valeur_etats[j1_etats[-1]])
+#     valeur_etats[j2_etats[-1]] = valeur_etats[j2_etats[-1]] + lr * (j2.resultat - valeur_etats[j2_etats[-1]])
+#     for i in range(len(j1_etats) - 1):
+#         valeur_etats[j1_etats[-2 -i]] = valeur_etats[j1_etats[-2 -i]] + lr * (valeur_etats[j1_etats[-1 -i]] - valeur_etats[j1_etats[-2 -i]])
+#     for i in range(len(j2_etats) - 1):
+#         valeur_etats[j2_etats[-2 -i]] = valeur_etats[j2_etats[-2 -i]] + lr * (valeur_etats[j2_etats[-1 -i]] - valeur_etats[j2_etats[-2 -i]])
 
-    print('liste des valeur par états :')
-    for v in valeur_etats:
-        print(v, ':', valeur_etats[v])
-    # j1.value_fonction(j1_etats, j1.resultat)
-    # j2.value_fonction(j2_etats, j2.resultat)
-    print('coups de j1 :', j1.partie_mem)
-    print('coups de j2 :', j2.partie_mem)
-    print('liste des etats j1', sorted(j1.etats.items(), reverse=True))
-    print('liste des etats j2', sorted(j2.etats.items(), reverse=True))
-    # une nouvelle partie
-    restart = input('Un nouvelle partie ? (y/n)')
-    while restart not in ['y', 'n']:
-        restart = input('Un nouvelle partie ? (y/n)')
-    if restart == 'n':
-        go_on = False
-    jeu.reset()
-    j1.reset()
-    j2.reset()
+#     print('liste des valeur par états :')
+#     for v in valeur_etats:
+#         print(v, ':', valeur_etats[v])
+#     # j1.value_fonction(j1_etats, j1.resultat)
+#     # j2.value_fonction(j2_etats, j2.resultat)
+#     print('coups de j1 :', j1.partie_mem)
+#     print('coups de j2 :', j2.partie_mem)
+#     print('liste des etats j1', sorted(j1.etats.items(), reverse=True))
+#     print('liste des etats j2', sorted(j2.etats.items(), reverse=True))
+#     # une nouvelle partie
+#     restart = input('Un nouvelle partie ? (y/n)')
+#     while restart not in ['y', 'n']:
+#         restart = input('Un nouvelle partie ? (y/n)')
+#     if restart == 'n':
+#         go_on = False
+#     jeu.reset()
+#     j1.reset()
+#     j2.reset()
 
-# print('J1 a perdu', j1.nb_perte, 'fois et gagné', j1.nb_gain, 'fois.')
+# # print('J1 a perdu', j1.nb_perte, 'fois et gagné', j1.nb_gain, 'fois.')
 # print('J2 a perdu', j2.nb_perte, 'fois et gagné', j2.nb_gain, 'fois.')
+quit()
