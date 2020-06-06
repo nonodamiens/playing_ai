@@ -17,14 +17,14 @@ class Gamer:
         """Remise à zéro des stats du joueur"""
         self.partie_mem = []
     
-    def action(self, max = 3, greedy = 0.99, state = [0, 0, 0]):
+    def action(self, max = 3, greedy = 0.99, state = [0, 0, 0], random_ia = False):
         """Choix du nombre d'allumette à prendre - choix du joueur humain ou non"""
         if self.human:
             # print("Choix du nombre d'allumettes (max : ", max, "):")
             choix = input('>')
             return choix
         else:
-            if random.uniform(0,1) < greedy:
+            if random.uniform(0,1) < greedy or random_ia:
                 choix = str(random.randint(1,max))
                 # print('choix random :', choix)
             else:

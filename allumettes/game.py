@@ -118,6 +118,7 @@ jeu.reset()
 
 greedy = 0.05
 while nb_parties > 0:
+    ia1_etats, ial_etats = [], []
     while jeu.nb_allumette > 0:
         if jeu.fin():
             ia1.nb_perte += 1
@@ -125,6 +126,7 @@ while nb_parties > 0:
             ia1.resultat = -1
             ial.resultat = 1
             break
+
         if jeu.nb_allumette > 3:
             ia1_choix = ia1.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette)])
         else:
@@ -139,13 +141,17 @@ while nb_parties > 0:
             ial.resultat = -1
             ia1.resultat = 1
             break
+
         if jeu.nb_allumette > 3:
-            ial_choix = ial.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette)])
+            ial_choix = ial.action(3, greedy, [valeur_etats[i] for i in range(jeu.nb_allumette - 3, jeu.nb_allumette)], True)
         else:
-            ial_choix = ial.action(jeu.nb_allumette, greedy, [valeur_etats[i] for i in range(1, jeu.nb_allumette)])
+            ial_choix = ial.action(jeu.nb_allumette, greedy, [valeur_etats[i] for i in range(1, jeu.nb_allumette)], True)
+        ial.partie(ial_choix)
+        ial_etats.append(jeu.nb_allumette)
         jeu.action(int(ial_choix))
     
     nb_parties -= 1
+    jeu.reset()
 
 print('ratio des parties')
 print('joueur ia1 winrate :', ia1.winrate())     
