@@ -54,7 +54,7 @@ t1 -> t0
 
 * Résumé/résultat/choix de l'agent :
 
-agent   -> révision (0.187) -> dodo (1.25)              => +5
+       -> révision (0.187) -> dodo (1.25)              => +5
 
                             -> grosse_révision (-0.25)  => -1
 
