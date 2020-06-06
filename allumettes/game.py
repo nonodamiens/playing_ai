@@ -1,6 +1,6 @@
 """Jeu des allumettes"""
 
-from classes import *
+from allumettes.classes import classes
 import re
 
 # choix du nombre d'allumettes

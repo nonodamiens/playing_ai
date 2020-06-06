@@ -1,4 +1,4 @@
-from allumettes import Game
+from allumettes import game
 
 if __name__ == "__main__":
     game.run()
